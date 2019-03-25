@@ -7,10 +7,11 @@ package week8;
 
 /**
  *
- * @author sitian.chen
+ * @author cst
  */
 public class Country {
     public String name;
     public double risk;
+    
     
 }

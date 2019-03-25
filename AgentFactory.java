@@ -5,16 +5,21 @@
  */
 package week8;
 import java.util.Random;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
- * @author sitian.chen
+ * @author cst
  */
 public class AgentFactory {
     //declare variables
     private static int id = 1000;
     public static double cover_THRES = 0.6;
+    public static List<Agent> upheldCover = new LinkedList<>();
+    public static List<Agent> notupheldCover = new LinkedList<>();
+    
     
     //Hand out a random stealthness number to each agent
     public static Agent genAgent(){
@@ -25,8 +30,33 @@ public class AgentFactory {
         return agent;
     }//close method
     
+    //simulator
+    public static Agent simulator(Agent a, double d){
+        if(a.getStealth()*d>cover_THRES){
+            return a;
+        }else{
+            return null;
+        }
+        
+    }//close method
+    
+    public static void setlist(){
+        int number = 0;
+        while(number<10000){
+            Agent b = new Agent();
+            if(simulator(b,getcountryrisk())!= null){
+                upheldCover.add(b);
+            }else{
+                notupheldCover.add(b);
+            }//close if else
+            number++;
+        }//close loop
+        
+    }//close method
+    
+    
     //country risk 
-    public static void main(String[] args){
+    public static double getcountryrisk(){
         Country c1 = new Country();
         c1.name="USA";
         c1.risk=0.2;
@@ -43,36 +73,30 @@ public class AgentFactory {
         c4.name="Austrilia";
         c4.risk=0.05;
         
-        Map<String,Double> map = new HashMap<>();
-        map.put(c1.name,c1.risk);
-        map.put(c2.name, c2.risk);
-        map.put(c3.name, c3.risk);
-        map.put(c4.name,c4.risk);
-        map.put(c5.name,c5.risk);
+        List<Country> countrylist = new LinkedList<>();
+        countrylist.add(0, c1);
+        countrylist.add(1, c2);
+        countrylist.add(2, c3);
+        countrylist.add(3, c4);
+        countrylist.add(4, c5);
+        Random t = new Random();
+        double randomrisk =countrylist.get(t.nextInt(countrylist.size())).risk;
         
-        map.keySet().size();
-        //simulate misson
-        System.out.println(genAgent().getID());
-        
-        if(genAgent().getID()*c1.risk>cover_THRES){
-            
-            
-        }
-        
+        return randomrisk;
+    }//close
+    
+    public static void main(String[] args){
         //coverupheld list
-        Agent[] coveruphold  = new Agent[5];
-        coveruphold[0]=new Agent();
-        coveruphold[1]=new Agent();
-        coveruphold[2]=new Agent();
-        coveruphold[3]=new Agent();
-        coveruphold[4]=new Agent();
-    
+        setlist();
+        Iterator iter = upheldCover.iterator();
         
-    
-    
-        
-
-        
+        //Agent[] coveruphold  = new Agent[5];
+        //coveruphold[0]=new Agent();
+        //coveruphold[1]=new Agent();
+        //coveruphold[2]=new Agent();
+        //coveruphold[3]=new Agent();
+        //coveruphold[4]=new Agent();
         
     }//close main
+    
 }

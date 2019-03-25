@@ -7,11 +7,10 @@ package week8;
 
 /**
  *
- * @author sitian.chen
+ * @author cst
  */
 public class Agent {
-    
-    private int id;
+     private int id;
     private double stealthiness;
     private boolean secretCoverUpheld;
     
@@ -40,4 +39,5 @@ public class Agent {
     public boolean getCoverUpheld(){
         return secretCoverUpheld;
     }
+    
 }
