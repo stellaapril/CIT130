@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week8;
+package week9;
 
 /**
  *
- * @author cst
+ * @author sitian.chen
  */
 public class Agent {
-     private int id;
+    private int id;
     private double stealthiness;
     private boolean secretCoverUpheld;
-    
+    public String toString(){
+        return ;
+    }
     //id
     public void setID(int i){
         id = i;

@@ -1,17 +1,22 @@
-/*
+./*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */./*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package week8;
+package week9;
 import java.util.Random;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+
 /**
  *
- * @author cst
+ * @author sitian.chen
  */
 public class AgentFactory {
     //declare variables
@@ -30,28 +35,29 @@ public class AgentFactory {
         return agent;
     }//close method
     
-    //simulator
+    
+    //simulator 
     public static Agent simulator(Agent a, double d){
         if(a.getStealth()*d>cover_THRES){
-            return a;
+            a.setCoverUpheld(true);
         }else{
-            return null;
+            a.setCoverUpheld(false);
         }
-        
+        return a;
     }//close method
     
-    public static void setlist(){
+    
+    //store agents in two list
+    public static void setlist(Agent o){
         int number = 0;
         while(number<10000){
-            Agent b = new Agent();
-            if(simulator(b,getcountryrisk())!= null){
-                upheldCover.add(b);
+            if(o.getCoverUpheld()){
+                upheldCover.add(o);
             }else{
-                notupheldCover.add(b);
+                notupheldCover.add(o);
             }//close if else
             number++;
         }//close loop
-        
     }//close method
     
     
@@ -85,10 +91,29 @@ public class AgentFactory {
         return randomrisk;
     }//close
     
+    public static AgentListStatistic computeListstatistic(List<Agent> g){
+        Iterator<Agent> iter = g.iterator();
+        while(iter.hasNext()){
+            System.out.println(iter.next()+"");
+        }//close loop
+        System.out.println("");
+        
+        AgentListStatistic agenti = new AgentListStatistic();
+        if(agenti.currentSteal>agenti.max){
+            agenti.max=agenti.currentSteal;
+        }else{
+        }//close if/else
+        
+       return agenti; 
+    }//close mehtod
+    
+    
     public static void main(String[] args){
         //coverupheld list
-        setlist();
-        Iterator iter = upheldCover.iterator();
+        setlist(simulator(genAgent(),getcountryrisk()));
+        computeListstatistic(upheldCover);
+        computeListstatistic(notupheldCover);
+        
         
         //Agent[] coveruphold  = new Agent[5];
         //coveruphold[0]=new Agent();
@@ -98,5 +123,4 @@ public class AgentFactory {
         //coveruphold[4]=new Agent();
         
     }//close main
-    
 }

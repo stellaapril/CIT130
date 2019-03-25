@@ -9,7 +9,12 @@ package week9;
  *
  * @author sitian.chen
  */
-public class Country {
-    public String name;
-    public double risk;
+public class AgentListStatistic {
+    double avg;
+    double min;
+    double max;
+    double total;
+    double activedouble;
+    double currentSteal;
+    
 }
