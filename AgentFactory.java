@@ -92,17 +92,22 @@ public class AgentFactory {
     }//close
     
     public static AgentListStatistic computeListstatistic(List<Agent> g){
+        AgentListStatistic agenti = new AgentListStatistic();
         Iterator<Agent> iter = g.iterator();
         while(iter.hasNext()){
             System.out.println(iter.next()+"");
+            if(agenti.currentSteal>agenti.max){
+                agenti.max=agenti.currentSteal;
+            }else if(agenti.currentSteal<agenti.min){
+                agenti.min=agenti.currentSteal;
+            }//close if/else
+            
         }//close loop
-        System.out.println("");
+        System.out.println(agenti.max);
+        System.out.println(agenti.min);
         
-        AgentListStatistic agenti = new AgentListStatistic();
-        if(agenti.currentSteal>agenti.max){
-            agenti.max=agenti.currentSteal;
-        }else{
-        }//close if/else
+     
+        
         
        return agenti; 
     }//close mehtod
@@ -111,8 +116,9 @@ public class AgentFactory {
     public static void main(String[] args){
         //coverupheld list
         setlist(simulator(genAgent(),getcountryrisk()));
-        computeListstatistic(upheldCover);
+        
         computeListstatistic(notupheldCover);
+        computeListstatistic(upheldCover);
         
         
         //Agent[] coveruphold  = new Agent[5];

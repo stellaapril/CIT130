@@ -13,8 +13,15 @@ public class Agent {
     private int id;
     private double stealthiness;
     private boolean secretCoverUpheld;
+    @Override
     public String toString(){
-        return ;
+        StringBuilder sb=new StringBuilder();
+        sb.append(id);
+        sb.append(' ');
+        sb.append(stealthiness);
+        sb.append(' ');
+        sb.append(secretCoverUpheld);
+        return sb.toString();
     }
     //id
     public void setID(int i){
