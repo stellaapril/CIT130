@@ -13,6 +13,7 @@ public class Agent {
     private int id;
     private double stealthiness;
     private boolean secretCoverUpheld;
+    
     @Override
     public String toString(){
         StringBuilder sb=new StringBuilder();
@@ -22,7 +23,8 @@ public class Agent {
         sb.append(' ');
         sb.append(secretCoverUpheld);
         return sb.toString();
-    }
+    }//close method
+    
     //id
     public void setID(int i){
         id = i;

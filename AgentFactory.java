@@ -1,12 +1,3 @@
-./*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */./*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package week9;
 import java.util.Random;
 import java.util.Iterator;
@@ -18,12 +9,15 @@ import java.util.List;
  *
  * @author sitian.chen
  */
+
 public class AgentFactory {
+    
     //declare variables
     private static int id = 1000;
-    public static double cover_THRES = 0.6;
+    public static double cover_THRES = 0.4;
     public static List<Agent> upheldCover = new LinkedList<>();
-    public static List<Agent> notupheldCover = new LinkedList<>();
+    public static List<Agent> blownCover = new LinkedList<>();
+    public static String listname;
     
     
     //Hand out a random stealthness number to each agent
@@ -34,32 +28,6 @@ public class AgentFactory {
         agent.setStealth(r.nextDouble());
         return agent;
     }//close method
-    
-    
-    //simulator 
-    public static Agent simulator(Agent a, double d){
-        if(a.getStealth()*d>cover_THRES){
-            a.setCoverUpheld(true);
-        }else{
-            a.setCoverUpheld(false);
-        }
-        return a;
-    }//close method
-    
-    
-    //store agents in two list
-    public static void setlist(Agent o){
-        int number = 0;
-        while(number<10000){
-            if(o.getCoverUpheld()){
-                upheldCover.add(o);
-            }else{
-                notupheldCover.add(o);
-            }//close if else
-            number++;
-        }//close loop
-    }//close method
-    
     
     //country risk 
     public static double getcountryrisk(){
@@ -91,42 +59,84 @@ public class AgentFactory {
         return randomrisk;
     }//close
     
+    
+    //simulator 
+    public static Agent simulator(Agent a, double risk){
+        if(a.getStealth()*risk>cover_THRES){
+            a.setCoverUpheld(true);
+        }else{
+            a.setCoverUpheld(false);
+        }
+        return a;
+    }//close method
+    
+    
+    //store agents in two list
+    public static void setlist(Agent o){
+        if(o.getCoverUpheld()){
+            upheldCover.add(o);
+        }else{
+            blownCover.add(o);
+        }
+    }//close method
+    
+    
     public static AgentListStatistic computeListstatistic(List<Agent> g){
         AgentListStatistic agenti = new AgentListStatistic();
+        
         Iterator<Agent> iter = g.iterator();
         while(iter.hasNext()){
-            System.out.println(iter.next()+"");
-            if(agenti.currentSteal>agenti.max){
-                agenti.max=agenti.currentSteal;
-            }else if(agenti.currentSteal<agenti.min){
-                agenti.min=agenti.currentSteal;
+            Agent b = iter.next();
+            //System.out.println(b+"");
+            //calculate Min Max
+            if(agenti.min>b.getStealth()){
+                agenti.min=b.getStealth();
+            }else if(agenti.max<b.getStealth()){
+                agenti.max=b.getStealth();
             }//close if/else
             
+            //calculate average of stealthness in the list
+            agenti.total+=b.getStealth();
+            agenti.avg=agenti.total/g.size();
+            
         }//close loop
-        System.out.println(agenti.max);
-        System.out.println(agenti.min);
-        
-     
-        
-        
-       return agenti; 
+    return agenti; 
     }//close mehtod
     
+    public static void display(){
+        System.out.println("_________________________________________________ ");
+        System.out.println("                 AGENT REPORT                    ");
+        System.out.println("_________________________________________________ ");
+        System.out.println("List Name: "+"UpheldCover");
+        System.out.println("Max of stealthiness: "+computeListstatistic(upheldCover).max);
+        System.out.println("Min of stealthiness: "+computeListstatistic(upheldCover).min);
+        System.out.println("Average of stealthiness: "+computeListstatistic(upheldCover).avg);
+        System.out.println("-------------------------------------------------");
+        System.out.println("List Name: "+"BlownCover");
+        System.out.println("Max of stealthiness: "+computeListstatistic(blownCover).max);
+        System.out.println("Min of stealthiness: "+computeListstatistic(blownCover).min);
+        System.out.println("Average of stealthiness: "+computeListstatistic(blownCover).avg);
+        System.out.println("_________________________________________________ ");
+        
+    }
     
     public static void main(String[] args){
         //coverupheld list
-        setlist(simulator(genAgent(),getcountryrisk()));
         
-        computeListstatistic(notupheldCover);
-        computeListstatistic(upheldCover);
+        int number=0;
+        while(number<100){
+            setlist(simulator(genAgent(),getcountryrisk()));
+            number++;
+        }//close loop
+        
+        display();
         
         
-        //Agent[] coveruphold  = new Agent[5];
-        //coveruphold[0]=new Agent();
-        //coveruphold[1]=new Agent();
-        //coveruphold[2]=new Agent();
-        //coveruphold[3]=new Agent();
-        //coveruphold[4]=new Agent();
         
+        //System.out.println("Min: "+computeListstatistic(upheldCover).min);
+        //System.out.println("Max: "+computeListstatistic(upheldCover).max);
+        //System.out.println("AVG: "+computeListstatistic(upheldCover).avg);
+        //System.out.println(computeListstatistic(notupheldCover).min);
+     
     }//close main
 }
