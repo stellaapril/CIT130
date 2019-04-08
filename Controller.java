@@ -9,22 +9,34 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+
 /**
  *
  * @author edarsow
  */
 public class Controller {
-    final int HOURS_THRESHOLD = 10;
+    int hourThreshold;
     final double CHANCE_THRESHOLD = .8;
     final int PLANES_TO_TEST = 12;
     //Refactor 2
-    final int CYLCES_THRESHOLD=7000;
+    int cylcesThreshold;
     
     private PlaneObjectModel model;
     private View view;
     
     private List<Aircraft> failureList;
     private List<Aircraft> safeList;
+    
+    //Refactor3
+    public int setHourThr (int h){
+       hourThreshold = h;
+       return hourThreshold;
+    }
+    public int setCylcesThr(int c){
+        cylcesThreshold = c;
+        return cylcesThreshold;
+    }
+    
     
     public Controller(){
         failureList = new LinkedList<>();
@@ -98,12 +110,12 @@ public class Controller {
         }//close
         **/
             
-        if(aircraft.getCycles()>=CYLCES_THRESHOLD){
+        if(aircraft.getCycles()>=cylcesThreshold){
             boolean b = r.nextBoolean();
             if(b){
                 aircraft.setCatastrophicFailure(true);
             }
-        }else if(aircraft.getHours() >= HOURS_THRESHOLD){
+        }else if(aircraft.getHours() >= hourThreshold){
             double d = r.nextDouble();
             aircraft.setUncertaintly(d);
             if(aircraft.getUncertaintly()>=CHANCE_THRESHOLD){

@@ -17,7 +17,6 @@ public class View {
     Controller cont;
     
     public void initiateUI(){
-        System.out.println("Enter the number of planes to test and press enter (0 for default): ");
         getInputAndRunTest();
         displayTestResults();
     }
@@ -25,7 +24,15 @@ public class View {
     public void getInputAndRunTest(){
         
         Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the number of planes to test and press enter (0 for default): ");
         int numPlanes = scan.nextInt();
+        //refactor3
+        System.out.println("Enter the number of the hours of operation threshold(0-130000): ");
+        int numHourthreshold = scan.nextInt();
+        System.out.println("Enter the number of the cylces threshold(0-8000): ");
+        int numCyclethreshold =scan.nextInt();
+        cont.setHourThr(numHourthreshold);
+        cont.setCylcesThr(numCyclethreshold);
         cont.generateAndTestAircrafts(numPlanes);
     }
     
