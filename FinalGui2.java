@@ -4,49 +4,44 @@
  * and open the template in the editor.
  */
 package week11;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 /**
  *
  * @author sitian.chen
  */
-public class FinalGui {
+public class FinalGui2 extends JFrame {
 
-    private static JFrame frame;
-    
+    //private static JFrame frame;
     private static KeyboardPanel keyPanel = new KeyboardPanel();
 
     //initialize ui
-    public FinalGui() {
+    public FinalGui2() {
         //add(keyPanel);
-
+        
         //set focus
         keyPanel.setFocusable(true);
     }
-    
+
     //main method 
     public static void main(String[] args) {
-        
-        //add a new frame
-        frame = new JFrame("Iron Man 3");
 
+        //add a new frame
+        FinalGui2 frame = new FinalGui2();
+        frame.setTitle("FinalGui2");
+        
+        
         frame.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         
-        frame.add(keyPanel);
-        
-        //set up panel
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(480, 300));
         panel.setBackground(Color.green);
         frame.add(panel);
-        
-        
-
-        
-        /**
         
         //inside panel
         JPanel paneltop = new JPanel();
@@ -71,6 +66,10 @@ public class FinalGui {
         panelpic.setPreferredSize(new Dimension(280, 160));
         panelpic.setBackground(Color.CYAN);
         panelmid.add(panelpic);
+        
+        
+        //add keyboardpanel
+        panelpic.add(keyPanel);
         
         
         //inside panelmid
@@ -100,11 +99,13 @@ public class FinalGui {
         p3bt.setBounds(60, 0, 5, 5);
         p3bt.setBackground(Color.GRAY);
         panelbutton.add(p3bt);
-
+        
+        
         JButton p4bt = new JButton("P4");
         p4bt.setBounds(80, 0, 5, 5);
         p4bt.setBackground(Color.GRAY);
         panelbutton.add(p4bt);
+        
 
         //inside panel
         JPanel panelright = new JPanel();
@@ -112,10 +113,9 @@ public class FinalGui {
         panelright.setBackground(Color.blue);
         panel.add(panelright);
         
-        */
         
-
-        frame.setSize(600, 600);
+        
+        frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -130,37 +130,43 @@ public class FinalGui {
 
         private int x = 100;
         private int y = 100;
-        private char keyChar = 'O';
+        private char keyChar = 'X';
 
         public KeyboardPanel() {
-            System.out.println("hello in keyboardpanel");
-            
-            addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyPressed(KeyEvent e){
-                //test
-                System.out.println("hello inside listener");
-                switch(e.getKeyCode()){
-                    case KeyEvent.VK_DOWN: y +=10; break;
-                    case KeyEvent.VK_UP: y -=10; break;
-                    //case KeyEvent.VK_LEFT: x -=10;break;
-                    //case KeyEvent.VK_RIGHT: x+=10;break;
-                    default: keyChar =e.getKeyChar();
+            addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    //test
+                    System.out.println("hello inside listener");
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_DOWN:
+                            y += 10;
+                            break;
+                        case KeyEvent.VK_UP:
+                            y -= 10;
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            x -= 10;
+                            break;
+                        case KeyEvent.VK_RIGHT:
+                            x += 10;
+                            break;
+                        default:
+                            keyChar = e.getKeyChar();
+                    }
+                    repaint();
                 }
-                repaint();
-                
-            }
+
             });
         }//close keyboardpnael
-        
-        /**
+
         @Override
         protected void paintComponent(Graphics g){
-            super.paint(g);
-            g.setFont(new Font("Times",Font.PLAIN,12));
+            super.paintComponent(g);
+            g.setFont(new Font("Times", Font.PLAIN, 20));
             g.drawString(String.valueOf(keyChar), x, y);
-            
+
         }
-        */
+
     }
 }
